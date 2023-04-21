@@ -1,13 +1,11 @@
-import { Link } from "react-router-dom";
-
 interface ActivityEmptyStateType {
-  to: string;
+  onClick: () => void;
 }
 
-const ActivityEmptyState = ({ to }: ActivityEmptyStateType) => {
+const ActivityEmptyState = ({ onClick }: ActivityEmptyStateType) => {
   return (
-    <Link
-      to={to}
+    <button
+      onClick={onClick}
       className="block w-[767px] mx-auto"
       data-cy="activity-empty-state"
     >
@@ -120,7 +118,7 @@ const ActivityEmptyState = ({ to }: ActivityEmptyStateType) => {
           </clipPath>
         </defs>
       </svg>
-    </Link>
+    </button>
   );
 };
 

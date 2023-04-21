@@ -74,7 +74,7 @@ const DashboardPage = () => {
           </div>
         </Button>
       </div>
-      {data.length < 1 && <ActivityEmptyState to="/add" />}
+      {data.length < 1 && <ActivityEmptyState onClick={handleAddActivity} />}
       {data.length > 0 && (
         <div className="grid grid-cols-4 gap-4">
           {data.map((item, idx) => (
