@@ -1,12 +1,13 @@
 import Button from "@/components/button";
 import Modal from "@/components/modal";
 import ModalDelete from "@/components/modal-delete";
+import { Menu, Transition } from "@headlessui/react";
 import ModalSuccess from "@/components/modal-success";
 import TodoEmptyState from "@/components/pages/dashboard/todo-empty.state";
 import Select from "@/components/select";
 import { ActivityDetailType, TodoType } from "@/types/activity";
 import api from "@/utils/fetch";
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import cx from "classnames";
 import {
   HiChevronLeft,
@@ -14,6 +15,14 @@ import {
   HiOutlineTrash,
   HiPlus,
 } from "react-icons/hi";
+import {
+  TbSortAscending,
+  TbSortDescending,
+  TbSortAscendingLetters,
+  TbSortDescendingLetters,
+  TbArrowsSort,
+  TbCheck,
+} from "react-icons/tb";
 import { HiArrowsUpDown } from "react-icons/hi2";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
@@ -25,6 +34,34 @@ const colors: any = {
   low: "#428BC1",
   "very-low": "#8942C1",
 };
+
+const sortMenu = [
+  {
+    label: "Terbaru",
+    icon: <TbSortDescending className="h-5 w-5" />,
+    value: "latest",
+  },
+  {
+    label: "Terlama",
+    icon: <TbSortAscending className="h-5 w-5" />,
+    value: "oldest",
+  },
+  {
+    label: "A-Z",
+    icon: <TbSortDescendingLetters className="h-5 w-5" />,
+    value: "az",
+  },
+  {
+    label: "Z-A",
+    icon: <TbSortAscendingLetters className="h-5 w-5" />,
+    value: "za",
+  },
+  {
+    label: "Belum Selesai",
+    icon: <TbArrowsSort className="h-5 w-5" />,
+    value: "unfinished",
+  },
+];
 
 const ActivityPage = () => {
   const { id } = useParams();
@@ -42,6 +79,7 @@ const ActivityPage = () => {
   const [isOpenModalDelete, setIsOpenModalDelete] = useState(false);
   const [isOpenModalSuccess, setIsOpenModalSuccess] = useState(false);
   const [selected, setSelected] = useState<TodoType>();
+  const [selectedSort, setSelectedSort] = useState("");
   const [modalData, setModalData] = useState<{
     title: string;
     priority?: {
@@ -70,6 +108,21 @@ const ActivityPage = () => {
         setIsOpenModalSuccess(true);
       });
   };
+
+  const handleSort = (value: string) => setSelectedSort(value);
+
+  function sortData(a: TodoType, b: TodoType) {
+    switch (selectedSort) {
+      case "az" || "oldest":
+        return a.title.localeCompare(b.title);
+      case "za" || "latest":
+        return b.title.localeCompare(a.title);
+      case "unfinished":
+        return b.is_active - a.is_active;
+      default:
+        return b.title.localeCompare(a.title);
+    }
+  }
 
   const handleSubmitModal = () => {
     if (!modalData.title) return;
@@ -159,12 +212,53 @@ const ActivityPage = () => {
           </button>
         </div>
         <div className="flex flex-row items-center space-x-4">
-          <button
-            data-cy="todo-sort-button"
-            className="rounded-full border h-12 w-12 flex items-center justify-center text-2xl text-gray-500"
-          >
-            <HiArrowsUpDown />
-          </button>
+          <Menu as="div" className="relative inline-block text-left">
+            <div>
+              <Menu.Button
+                data-cy="todo-sort-button"
+                className="rounded-full border h-12 w-12 flex items-center justify-center text-2xl text-gray-500"
+              >
+                <HiArrowsUpDown />
+              </Menu.Button>
+            </div>
+            <Transition
+              as={Fragment}
+              enter="transition ease-out duration-100"
+              enterFrom="transform opacity-0 scale-95"
+              enterTo="transform opacity-100 scale-100"
+              leave="transition ease-in duration-75"
+              leaveFrom="transform opacity-100 scale-100"
+              leaveTo="transform opacity-0 scale-95"
+            >
+              <Menu.Items className="absolute right-0 mt-2 w-48 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <div className="px-1 py-1 ">
+                  {sortMenu.map((item, idx) => (
+                    <Menu.Item key={idx}>
+                      {({ active }) => (
+                        <button
+                          className={`${
+                            active
+                              ? "bg-violet-500 text-white"
+                              : "text-gray-900"
+                          } group flex flex-row w-full items-center rounded-md px-2 py-2 text-sm justify-between`}
+                          onClick={() => handleSort(item.value)}
+                          data-cy={`sort-${item.value}`}
+                        >
+                          <div className="flex flex-row items-center space-x-2">
+                            {item.icon}
+                            <span>{item.label}</span>
+                          </div>
+                          {item.value === selectedSort && (
+                            <TbCheck className="h-5 w-5" />
+                          )}
+                        </button>
+                      )}
+                    </Menu.Item>
+                  ))}
+                </div>
+              </Menu.Items>
+            </Transition>
+          </Menu>
           <Button
             data-cy="todo-add-button"
             onClick={() => setIsOpenModal(true)}
@@ -180,7 +274,7 @@ const ActivityPage = () => {
         {data.todo_items.length < 1 && (
           <TodoEmptyState onClick={handleShowModal} />
         )}
-        {data.todo_items.map((item, idx) => (
+        {data.todo_items.sort(sortData).map((item, idx) => (
           <div
             key={idx}
             data-cy={`todo-item-${idx}`}
