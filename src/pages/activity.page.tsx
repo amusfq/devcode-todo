@@ -7,6 +7,7 @@ import Select from "@/components/select";
 import { ActivityDetailType, TodoType } from "@/types/activity";
 import api from "@/utils/fetch";
 import { useEffect, useRef, useState } from "react";
+import cx from "classnames";
 import {
   HiChevronLeft,
   HiOutlinePencil,
@@ -71,6 +72,7 @@ const ActivityPage = () => {
   };
 
   const handleSubmitModal = () => {
+    if (!modalData.title) return;
     api
       .post(`/todo-items`, {
         activity_group_id: id,
@@ -96,6 +98,14 @@ const ActivityPage = () => {
   const handleUpdateTitle = () => {
     setIsEdit(false);
     api.patch(`/activity-groups/${id}`, { title: data.title });
+  };
+
+  const handleToggleStatus = (e: any, id: number) => {
+    api
+      .patch(`/todo-items/${id}`, {
+        is_active: !e.target.checked,
+      })
+      .then(() => getData());
   };
 
   const getData = () => {
@@ -183,13 +193,21 @@ const ActivityPage = () => {
                 id={`todo-item-${idx}`}
                 className="h-5 w-5"
                 data-cy="todo-item-checkbox"
+                onChange={(e) => handleToggleStatus(e, item.id)}
+                defaultChecked={!item.is_active}
               />
               <span
                 data-cy="todo-item-priority-indicator"
                 className="block w-3 h-3 rounded-full"
                 style={{ background: colors[item.priority] }}
               ></span>
-              <span className="text-lg font-semibold" data-cy="todo-item-title">
+              <span
+                className={cx(
+                  "text-lg font-semibold",
+                  item.is_active ? "" : "line-through"
+                )}
+                data-cy="todo-item-title"
+              >
                 {item.title}
               </span>
               <button className="text-gray-400" data-cy="todo-item-edit-button">
