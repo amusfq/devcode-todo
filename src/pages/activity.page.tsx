@@ -188,24 +188,25 @@ const ActivityPage = () => {
           </Link>
           <span
             ref={spanRef}
+            data-cy="todo-title"
             className="absolute opacity-0 pointer-events-none"
           >
             {data.title}
           </span>
           <input
             ref={titleRef}
-            data-cy="todo-title"
             type="text"
             style={{ width }}
             className="bg-transparent"
             value={data.title}
             onChange={(e) => setData({ ...data, title: e.currentTarget.value })}
-            disabled={!isEdit}
+            readOnly={!isEdit}
+            onClick={() => setIsEdit(true)}
             onBlur={handleUpdateTitle}
           />
           <button
             className="text-gray-400 text-2xl"
-            onClick={() => setIsEdit(!isEdit)}
+            onClick={() => setIsEdit(true)}
             data-cy="todo-title-edit-button"
           >
             <HiOutlinePencil />
@@ -215,7 +216,7 @@ const ActivityPage = () => {
           <Menu as="div" className="relative inline-block text-left">
             <div>
               <Menu.Button
-                data-cy="todo-sort-button"
+                data-cy="sort-selection"
                 className="rounded-full border h-12 w-12 flex items-center justify-center text-2xl text-gray-500"
               >
                 <HiArrowsUpDown />
@@ -323,6 +324,7 @@ const ActivityPage = () => {
         isOpen={isOpenModal}
         closeModal={handleCloseModal}
         handleSubmit={handleSubmitModal}
+        disableSubmit={!modalData.title}
       >
         <div className="space-y-4">
           <div className="flex flex-col space-y-2">
@@ -334,6 +336,7 @@ const ActivityPage = () => {
             </label>
             <input
               type="text"
+              data-cy="modal-add-name-title"
               id="modal-add-name-title"
               name="modal-add-name-title"
               className="h-14 text-base px-4 outline-none border rounded-md focus:border-primary"

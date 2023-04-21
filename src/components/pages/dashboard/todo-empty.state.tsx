@@ -3,7 +3,7 @@ interface TodoEmptyStateType {
 }
 
 const TodoEmptyState = ({ onClick }: TodoEmptyStateType) => (
-  <button
+  <div
     onClick={onClick}
     className="block w-[767px] mx-auto"
     data-cy="todo-empty-state"
@@ -119,6 +119,6 @@ const TodoEmptyState = ({ onClick }: TodoEmptyStateType) => (
         </clipPath>
       </defs>
     </svg>
-  </button>
+  </div>
 );
 export default TodoEmptyState;

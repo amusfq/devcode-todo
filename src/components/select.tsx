@@ -26,7 +26,10 @@ export default function Select({ onChange, selected }: Props) {
     <div className="w-52 h-14" data-cy="modal-add-priority-dropdown">
       <Listbox value={selected} onChange={onChange}>
         <div className="relative mt-1">
-          <Listbox.Button className="relative w-full h-14 cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left border focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+          <Listbox.Button
+            data-cy="modal-add-priority-item"
+            className="relative w-full h-14 cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left border focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm"
+          >
             <div className="flex flex-row items-center space-x-3">
               {selected && (
                 <span
@@ -58,7 +61,7 @@ export default function Select({ onChange, selected }: Props) {
                     }`
                   }
                   value={item}
-                  data-cy={`modal-add-priority-${item.value}`}
+                  data-cy={`modal-add-priority-${idx}`}
                 >
                   {({ selected }) => (
                     <>

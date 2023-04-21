@@ -8,6 +8,7 @@ type Props = {
   children: ReactNode;
   closeModal: () => void;
   handleSubmit: () => void;
+  disableSubmit: boolean;
 };
 
 const Modal = ({
@@ -16,6 +17,7 @@ const Modal = ({
   closeModal,
   children,
   handleSubmit,
+  disableSubmit,
 }: Props) => {
   return (
     <>
@@ -60,6 +62,7 @@ const Modal = ({
                     <Button
                       data-cy="modal-add-save-button"
                       onClick={handleSubmit}
+                      disabled={disableSubmit}
                     >
                       <div className="flex flex-row items-center space-x-2">
                         <span className="text-lg">Simpan</span>

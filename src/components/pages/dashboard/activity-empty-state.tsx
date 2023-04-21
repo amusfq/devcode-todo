@@ -4,7 +4,7 @@ interface ActivityEmptyStateType {
 
 const ActivityEmptyState = ({ onClick }: ActivityEmptyStateType) => {
   return (
-    <button
+    <div
       onClick={onClick}
       className="block w-[767px] mx-auto"
       data-cy="activity-empty-state"
@@ -118,7 +118,7 @@ const ActivityEmptyState = ({ onClick }: ActivityEmptyStateType) => {
           </clipPath>
         </defs>
       </svg>
-    </button>
+    </div>
   );
 };
 
