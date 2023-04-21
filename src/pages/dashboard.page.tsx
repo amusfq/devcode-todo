@@ -74,8 +74,9 @@ const DashboardPage = () => {
           </div>
         </Button>
       </div>
-      {data.length < 1 && <ActivityEmptyState />}
-      {data.length > 0 && (
+      {data.length < 1 ? (
+        <ActivityEmptyState />
+      ) : (
         <div className="grid grid-cols-4 gap-4">
           {data.map((item, idx) => (
             <ActivityItem

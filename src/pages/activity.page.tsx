@@ -73,7 +73,6 @@ const ActivityPage = () => {
     created_at: "",
     todo_items: [],
   });
-  const [isEdit, setIsEdit] = useState(false);
   const [width, setWidth] = useState(10);
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isOpenModalDelete, setIsOpenModalDelete] = useState(false);
@@ -149,7 +148,6 @@ const ActivityPage = () => {
   };
 
   const handleUpdateTitle = () => {
-    setIsEdit(false);
     api.patch(`/activity-groups/${id}`, { title: data.title });
   };
 
@@ -170,10 +168,6 @@ const ActivityPage = () => {
   useEffect(() => {
     setWidth(spanRef.current?.offsetWidth ?? 0);
   }, [data.title]);
-
-  useEffect(() => {
-    if (isEdit) titleRef.current?.focus();
-  }, [isEdit]);
 
   useEffect(() => {
     if (id) getData();
@@ -198,15 +192,13 @@ const ActivityPage = () => {
             type="text"
             style={{ width }}
             className="bg-transparent"
-            value={data.title}
+            value={data.title ?? "New Activity"}
             onChange={(e) => setData({ ...data, title: e.currentTarget.value })}
-            readOnly={!isEdit}
-            onClick={() => setIsEdit(true)}
             onBlur={handleUpdateTitle}
           />
           <button
             className="text-gray-400 text-2xl"
-            onClick={() => setIsEdit(true)}
+            onClick={() => titleRef.current?.focus()}
             data-cy="todo-title-edit-button"
           >
             <HiOutlinePencil />
