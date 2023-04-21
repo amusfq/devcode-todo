@@ -37,12 +37,12 @@ const ModalSuccess = ({ isOpen, title, closeModal }: Props) => {
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel
-                  data-cy="modal-add"
+                  data-cy="modal-information"
                   className="w-full max-w-sm transform rounded-2xl bg-white text-left align-middle shadow-xl transition-all"
                 >
                   <div className="px-6 py-4 flex flex-row items-center space-x-2">
-                    <BiInfoCircle className="text-2xl text-green-500" />
-                    <span>{title}</span>
+                    <BiInfoCircle className="text-2xl text-green-500" data-cy="modal-information-icon" />
+                    <span data-cy="modal-information-title">{title}</span>
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

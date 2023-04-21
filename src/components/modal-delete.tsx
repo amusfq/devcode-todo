@@ -38,7 +38,7 @@ const ModalDelete = ({ isOpen, closeModal, children, handleSubmit }: Props) => {
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel
-                  data-cy="modal-add"
+                  data-cy="modal-delete"
                   className="w-full max-w-md transform rounded-2xl bg-white text-left align-middle shadow-xl transition-all"
                 >
                   <div className="mt-2 px-6 py-4">
