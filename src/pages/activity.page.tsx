@@ -329,6 +329,7 @@ const ActivityPage = () => {
         <div className="space-y-4">
           <div className="flex flex-col space-y-2">
             <label
+              data-cy="modal-add-name-title"
               className="text-xs font-semibold"
               htmlFor="modal-add-name-title"
             >
@@ -336,7 +337,7 @@ const ActivityPage = () => {
             </label>
             <input
               type="text"
-              data-cy="modal-add-name-title"
+              data-cy="modal-add-name-input"
               id="modal-add-name-title"
               name="modal-add-name-title"
               className="h-14 text-base px-4 outline-none border rounded-md focus:border-primary"
@@ -348,6 +349,7 @@ const ActivityPage = () => {
           </div>
           <div className="flex flex-col space-y-2">
             <label
+              data-cy="modal-add-priority-title"
               className="text-xs font-semibold"
               htmlFor="modal-add-priority-title"
             >
