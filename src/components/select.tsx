@@ -61,7 +61,7 @@ export default function Select({ onChange, selected }: Props) {
                     }`
                   }
                   value={item}
-                  data-cy={`modal-add-priority-${idx}`}
+                  data-cy={`modal-add-priority`}
                 >
                   {({ selected }) => (
                     <>

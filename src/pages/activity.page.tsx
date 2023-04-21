@@ -188,13 +188,13 @@ const ActivityPage = () => {
           </Link>
           <span
             ref={spanRef}
-            data-cy="todo-title"
             className="absolute opacity-0 pointer-events-none"
           >
             {data.title}
           </span>
           <input
             ref={titleRef}
+            data-cy="todo-title"
             type="text"
             style={{ width }}
             className="bg-transparent"
@@ -216,7 +216,7 @@ const ActivityPage = () => {
           <Menu as="div" className="relative inline-block text-left">
             <div>
               <Menu.Button
-                data-cy="sort-selection"
+                data-cy="todo-sort-button"
                 className="rounded-full border h-12 w-12 flex items-center justify-center text-2xl text-gray-500"
               >
                 <HiArrowsUpDown />
@@ -243,7 +243,7 @@ const ActivityPage = () => {
                               : "text-gray-900"
                           } group flex flex-row w-full items-center rounded-md px-2 py-2 text-sm justify-between`}
                           onClick={() => handleSort(item.value)}
-                          data-cy={`sort-${item.value}`}
+                          data-cy={`sort-selection`}
                         >
                           <div className="flex flex-row items-center space-x-2">
                             {item.icon}

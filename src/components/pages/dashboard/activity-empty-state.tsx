@@ -1,11 +1,6 @@
-interface ActivityEmptyStateType {
-  onClick: () => void;
-}
-
-const ActivityEmptyState = ({ onClick }: ActivityEmptyStateType) => {
+const ActivityEmptyState = () => {
   return (
     <div
-      onClick={onClick}
       className="block w-[767px] mx-auto"
       data-cy="activity-empty-state"
     >

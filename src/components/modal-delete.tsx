@@ -26,8 +26,11 @@ const ModalDelete = ({ isOpen, closeModal, children, handleSubmit }: Props) => {
             <div className="fixed inset-0 bg-black bg-opacity-50" />
           </Transition.Child>
 
-          <div className="fixed inset-0 overflow-y-auto" data-cy="modal-delete">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
+          <div className="fixed inset-0 overflow-y-auto">
+            <div
+              className="flex min-h-full items-center justify-center p-4 text-center"
+              data-cy="modal-delete"
+            >
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
